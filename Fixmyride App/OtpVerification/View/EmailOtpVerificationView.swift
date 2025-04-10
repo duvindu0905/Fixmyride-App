@@ -33,16 +33,20 @@ struct EmailOtpVerificationView: View {
     var otpInputField: some View {
         HStack {
             ForEach(0..<4, id: \.self) { index in
-                OtpTextInputView(input: $otp[index])
-                    .focused($focusedIndex, equals: index)
-                    .onChange(of: otp[index]) {
-                        if otp[index].count > 1 {
-                            otp[index] = String(otp[index].prefix(1))
+                if #available(iOS 17.0, *) {
+                    OtpTextInputView(input: $otp[index])
+                        .focused($focusedIndex, equals: index)
+                        .onChange(of: otp[index]) {
+                            if otp[index].count > 1 {
+                                otp[index] = String(otp[index].prefix(1))
+                            }
+                            if !otp[index].isEmpty {
+                                focusedIndex = (index < 3) ? index + 1 : nil
+                            }
                         }
-                        if !otp[index].isEmpty {
-                            focusedIndex = (index < 3) ? index + 1 : nil
-                        }
-                    }
+                } else {
+                    // Fallback on earlier versions
+                }
             }
         }
     }

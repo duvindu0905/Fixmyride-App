@@ -14,6 +14,6 @@ struct HyperLinkTextView: View {
 }
 
 #Preview {
-    HyperLinkTextView(text: "Sample")
+    HyperLinkTextView(text: "Car")
 }
 

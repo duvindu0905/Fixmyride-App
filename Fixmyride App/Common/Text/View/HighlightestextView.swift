@@ -13,6 +13,6 @@ struct HighlightedTextView: View {
 }
 
 #Preview {
-    HighlightedTextView(text: "Sample")
+    HighlightedTextView(text: "Car")
 }
 

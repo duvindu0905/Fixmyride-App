@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ForgotPasswordVerifyEmailView: View {
     @EnvironmentObject var globalDto: GlobalDto
-    @State var universityEmail: String = ""
+    @State var Email: String = ""
 
     var body: some View {
         ZStack {
@@ -12,13 +12,13 @@ struct ForgotPasswordVerifyEmailView: View {
                 HeadingTextView(text: "Forgot Password")
                     .padding(.top, 16)
                 NormalTextView(
-                    text: "Don't worry! Please enter your university email.",
+                    text: "Don't worry! Please enter your email.",
                     multilineTextAlignment: .center
                 )
 
                 CommonTextInputView(
-                    hint: "University Email",
-                    text: $universityEmail
+                    hint: "Email",
+                    text: $Email
                 )
 
                 Button {

@@ -11,6 +11,6 @@ struct HeadingTextView: View {
 }
 
 #Preview {
-    HeadingTextView(text: "Sample text")
+    HeadingTextView(text: "Car")
 }
 

@@ -19,7 +19,7 @@ struct CommonTextInputView: View {
 struct PreviewTextInput: View {
     @State var temp: String = ""
     var body: some View {
-        CommonTextInputView(hint: "University Email", text: $temp)
+        CommonTextInputView(hint: "Email", text: $temp)
     }
 }
 

@@ -14,7 +14,7 @@ struct NormalTextView: View {
 }
 
 #Preview {
-    NormalTextView(text: "Shaa")
+    NormalTextView(text: "Car")
 }
 
 

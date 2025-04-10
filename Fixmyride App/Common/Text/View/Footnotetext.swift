@@ -11,6 +11,6 @@ struct FootnoteTextView: View {
 }
 
 #Preview {
-    FootnoteTextView(text: "This is a sample")
+    FootnoteTextView(text: "Car")
 }
 

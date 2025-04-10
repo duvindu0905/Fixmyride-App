@@ -12,6 +12,6 @@ struct TitleTextView: View {
 }
 
 #Preview {
-    TitleTextView(text: "fajskdl")
+    TitleTextView(text: "car")
 }
 

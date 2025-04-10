@@ -14,6 +14,6 @@ struct SecondaryHeadingTextView: View {
 }
 
 #Preview {
-    SecondaryHeadingTextView(text: "jfklasd")
+    SecondaryHeadingTextView(text: "car")
 }
 

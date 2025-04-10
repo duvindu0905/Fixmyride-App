@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct LoginView: View {
+    @EnvironmentObject var globalDto: GlobalDto
+    @State var Email: String = ""
     @StateObject private var viewModel = LoginViewModel()
 
     var body: some View {
@@ -30,14 +32,14 @@ struct LoginView: View {
                 }) {
                     CommonButtonView(
                         buttonText: "Sign In",
-                        backgroundColor: .brandcolor,
+                        backgroundColor: .brand,
                         foregroundColor: .white
                     )
                 }
-                .padding(.horizontal)
+                
 
                 Button(action: {
-                    // Google sign-in logic
+                   
                 }) {
                     CommonButtonView(
                     
@@ -47,7 +49,7 @@ struct LoginView: View {
                     )
                 }
                 .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.gray, lineWidth: 1))
-                .padding(.horizontal)
+                
 
                 Spacer()
 
@@ -56,7 +58,7 @@ struct LoginView: View {
                     Button("Register now") {
                         // Navigation to registration
                     }
-                    .foregroundColor(.brandcolor)
+                    .foregroundColor(.brand)
                 }
             }
             .padding()
