@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct NotificationView: View {
-    @State var notificatins: [NotificationModel]?
+    @StateObject private var viewModel = NotificationViewModel.shared
+
     var body: some View {
         ZStack {
             CommonBackgroundView()
@@ -12,20 +13,20 @@ struct NotificationView: View {
                 }
                 .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
-                if let notificatins = notificatins {
+                if !viewModel.notifications.isEmpty {
                     if #available(iOS 17.0, *) {
                         List {
-                            ForEach(notificatins) { notification in
+                            ForEach(viewModel.notifications) { notification in
                                 CommonNavigationListType4View(
                                     titleText: notification.title,
-                                    subtitleText: notification.day,
+                                    subtitleText: notification.day, 
                                     descriptionText: notification.message
                                 )
                             }
                         }
-                        .contentMargins(.vertical, 0)
+                        .contentMargins(.vertical, 10)
                     } else {
-                       
+                        Text("List for iOS <17.0 not implemented.")
                     }
                 } else {
                     FootnoteTextView(text: "No data")
@@ -36,7 +37,9 @@ struct NotificationView: View {
             .padding(.top, 32)
         }
         .onAppear {
-            notificatins = NotificationViewModel.shared.getNotification()
+            viewModel.getNotification { fetched in
+                viewModel.notifications = fetched
+            }
         }
     }
 }
