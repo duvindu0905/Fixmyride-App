@@ -6,6 +6,7 @@ struct EmailOtpVerificationView: View {
     @FocusState var focusedIndex: Int?
     @State var timer: Timer? = nil
     @State var timerValue: Int = 0
+    @State var errorMessage: String?
 
     var body: some View {
         ZStack {
@@ -22,6 +23,11 @@ struct EmailOtpVerificationView: View {
                 )
 
                 otpInputField
+
+                if let error = errorMessage {
+                    FootnoteTextView(text: error)
+                        .foregroundColor(.red)
+                }
 
                 verifyButton
 
@@ -54,22 +60,50 @@ struct EmailOtpVerificationView: View {
     var verifyButton: some View {
         Button {
             let enteredOtp = otp.joined()
-            print("Email OTP entered: \(enteredOtp)")
-
-            if globalDto.comingFrom == Route.forgotPasswordVerifyEmail.rawValue {
-                // OTP from forgot password: Go to Reset Password
-                globalDto.paths.append(Route.forgotPasswordResetPassword.rawValue)
-            } else if globalDto.comingFrom == Route.login.rawValue {
-                // OTP from sign in: Go to Home
-                globalDto.paths = [Route.home.rawValue]
+            Task {
+                await verifyOtp(otp: enteredOtp)
             }
-
         } label: {
             CommonButtonView(
                 buttonText: "Verify",
                 backgroundColor: Color("brandColor"),
                 foregroundColor: .white
             )
+        }
+    }
+
+    func verifyOtp(otp: String) async {
+        // ✅ Add email as query param
+        guard let url = URL(string: "https://4wxr949qfc.execute-api.ap-southeast-1.amazonaws.com/live/api/verify-otp?email=\(globalDto.email)") else {
+            errorMessage = "Invalid URL"
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        let body = ["otp": otp]
+        request.httpBody = try? JSONEncoder().encode(body)
+
+        do {
+            let (_, response) = try await URLSession.shared.data(for: request)
+            if let res = response as? HTTPURLResponse, res.statusCode == 200 {
+                DispatchQueue.main.async {
+                    if globalDto.comingFrom == Route.forgotPasswordVerifyEmail.rawValue {
+                        globalDto.paths.append(Route.forgotPasswordResetPassword.rawValue)
+                    } else if globalDto.comingFrom == Route.login.rawValue {
+                        globalDto.paths = [Route.home.rawValue]
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    errorMessage = "Invalid OTP. Please try again."
+                }
+            }
+        } catch {
+            DispatchQueue.main.async {
+                errorMessage = "Server error. Try again later."
+            }
         }
     }
 
@@ -80,13 +114,15 @@ struct EmailOtpVerificationView: View {
                 HighlightedTextView(text: "\(timerValue) s")
             } else {
                 HyperLinkTextView(text: "retry")
-                    .onTapGesture { startTimer() }
+                    .onTapGesture {
+                        startTimer()
+                    }
             }
         }
     }
 
     func startTimer() {
-        timerValue = timerValue != 0 ? timerValue : 120
+        timerValue = 120
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
             if timerValue > 0 {
                 timerValue -= 1

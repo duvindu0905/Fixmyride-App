@@ -7,6 +7,7 @@ struct LoginView: View {
     var body: some View {
         ZStack {
             CommonBackgroundView()
+
             VStack(spacing: 16) {
                 Image("logo")
 
@@ -19,17 +20,15 @@ struct LoginView: View {
                 )
 
                 CommonTextInputView(
-                    hint: "Email Address",
+                    hint: "Enter Your Email Address",
                     text: $viewModel.email
                 )
+
                 HStack {
                     Spacer()
                     HyperLinkTextView(text: "Forgot password?")
                         .onTapGesture {
-                            globalDto.paths
-                                .append(
-                                    Route.forgotPasswordVerifyEmail.rawValue
-                                )
+                            globalDto.paths.append(Route.forgotPasswordVerifyEmail.rawValue)
                         }
                 }
 
@@ -55,15 +54,15 @@ struct LoginView: View {
                 Spacer()
 
                 HStack {
-                    NormalTextView(text: "Don't have an account?")
-                    Button("Register now") {
-                        globalDto.comingFrom = Route.login.rawValue
-                        
-                    }
-                    .foregroundColor(.brand)
+                    NormalTextView(text: "Not a service provider?")
+                    HyperLinkTextView(text: "Register now")
+                        .onTapGesture {
+                            globalDto.comingFrom = Route.login.rawValue
+                            // Navigate to register route if needed
+                        }
                 }
             }
-            .padding()
+            .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
         }
     }
 }
@@ -72,3 +71,4 @@ struct LoginView: View {
     LoginView()
         .environmentObject(GlobalDto.shared)
 }
+

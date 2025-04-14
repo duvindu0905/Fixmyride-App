@@ -19,7 +19,7 @@ struct FixMyRideApp: App {
                         } else if destination == Route.forgotPasswordResetPassword.rawValue {
                             ResetPasswordView()
                         } else if destination == Route.home.rawValue {
-                            TabLandingView() // ✅ Main tab-based screen with Home, Activities, Profile, etc.
+                            TabLandingView() // 
                         } else if destination == Route.profile.rawValue {
                             ProfileView()
                         } else if destination == Route.profileEdit.rawValue {
