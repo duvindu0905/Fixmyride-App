@@ -57,8 +57,13 @@ struct EmailOtpVerificationView: View {
             print("Email OTP entered: \(enteredOtp)")
 
             if globalDto.comingFrom == Route.forgotPasswordVerifyEmail.rawValue {
-                globalDto.paths.append(Route.home.rawValue)
+                // OTP from forgot password: Go to Reset Password
+                globalDto.paths.append(Route.forgotPasswordResetPassword.rawValue)
+            } else if globalDto.comingFrom == Route.login.rawValue {
+                // OTP from sign in: Go to Home
+                globalDto.paths = [Route.home.rawValue]
             }
+
         } label: {
             CommonButtonView(
                 buttonText: "Verify",

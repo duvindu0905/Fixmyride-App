@@ -18,10 +18,8 @@ struct FixMyRideApp: App {
                             ForgotPasswordVerifyEmailView()
                         } else if destination == Route.forgotPasswordResetPassword.rawValue {
                             ResetPasswordView()
-                        } else if destination
-                                    == Route.home.rawValue
-                        {
-                            TabLandingView()
+                        } else if destination == Route.home.rawValue {
+                            TabLandingView() // ✅ Main tab-based screen with Home, Activities, Profile, etc.
                         } else if destination == Route.profile.rawValue {
                             ProfileView()
                         } else if destination == Route.profileEdit.rawValue {
@@ -31,7 +29,7 @@ struct FixMyRideApp: App {
                         } else if destination == Route.activities.rawValue {
                             ActivitiesView()
                         }
-                        // Add other routes as needed
+                        // Add more destinations here if needed
                     }
             }
             .accentColor(Color("brandColor"))
