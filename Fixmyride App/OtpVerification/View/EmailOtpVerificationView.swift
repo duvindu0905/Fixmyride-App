@@ -12,10 +12,12 @@ struct EmailOtpVerificationView: View {
             CommonBackgroundView()
             VStack(spacing: 16) {
                 Image("otpVerification")
+
                 HeadingTextView(text: "Email OTP Verification")
                     .padding(.top, 16)
+
                 NormalTextView(
-                    text: "We've sent a 4-digit code to your university email",
+                    text: "We've sent a 4-digit code to your email: \(globalDto.email)",
                     multilineTextAlignment: .center
                 )
 
@@ -44,8 +46,6 @@ struct EmailOtpVerificationView: View {
                                 focusedIndex = (index < 3) ? index + 1 : nil
                             }
                         }
-                } else {
-                    // Fallback on earlier versions
                 }
             }
         }
@@ -55,12 +55,8 @@ struct EmailOtpVerificationView: View {
         Button {
             let enteredOtp = otp.joined()
             print("Email OTP entered: \(enteredOtp)")
-            // Navigation logic
-            if globalDto.commingFrom == Route.forgotPasswordVerifyEmail.rawValue {
-                globalDto.paths.append(Route.forgotPasswordResetPassword.rawValue)
-            } else if globalDto.commingFrom == Route.registration.rawValue {
-                globalDto.isLoggedIn = true
-                globalDto.role = .scholar
+
+            if globalDto.comingFrom == Route.forgotPasswordVerifyEmail.rawValue {
                 globalDto.paths.append(Route.home.rawValue)
             }
         } label: {

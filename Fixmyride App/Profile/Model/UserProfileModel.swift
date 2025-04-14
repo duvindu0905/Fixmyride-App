@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct UserProfileModel {
+struct UserProfileModel: Identifiable, Codable {
     var id: UUID = UUID()
     var firstName: String
     var lastName: String

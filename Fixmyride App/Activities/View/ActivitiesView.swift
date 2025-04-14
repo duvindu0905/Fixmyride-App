@@ -1,44 +1,74 @@
 import SwiftUI
 
 struct ActivitiesView: View {
-    @State private var activities: [ActivitiesModel] = ActivitiesViewModel.shared.getAllActivities()
+    @StateObject private var viewModel = ActivitiesViewModel.shared
 
     var body: some View {
         ZStack {
             CommonBackgroundView()
 
-            VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 16) {
+                TitleTextView(text: "My Activities")
+                    .padding(.horizontal)
+
                 HStack {
-                    TitleTextView(text: "Activities")
+                    Text("Pending").foregroundColor(.gray)
                     Spacer()
+                    Text("Upcoming").foregroundColor(.gray)
+                    Spacer()
+                    Text("Completed")
+                        .bold()
+                        .underline()
                 }
-                .padding(.top, 32)
-                .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                .padding(.horizontal)
+                .padding(.top, 8)
 
-                Button {
-                    // Action for date filter goes here
-                } label: {
-                    CommonButtonView(
-                        buttonText: "13 Feb 25 - 23 Feb 25",
-                        backgroundColor: Color("inputBackground"),
-                        foregroundColor: .black
-                    )
-                }
-                .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                if !viewModel.activities.isEmpty {
+                    if #available(iOS 17.0, *) {
+                        List {
+                            ForEach(viewModel.activities) { activity in
+                                VStack(alignment: .leading, spacing: 4) {
+                                    HStack {
+                                        Text("Booking ID: \(activity.bookingId)")
+                                            .foregroundColor(.blue)
+                                            .fontWeight(.semibold)
+                                        Spacer()
+                                        Text(activity.date)
+                                            .font(.caption)
+                                            .foregroundColor(.gray)
+                                    }
 
-                List {
-                    ForEach(activities, id: \.bookingID) { activity in
-                        CommonNavigationListType3(
-                            titleText: activity.centerName,
-                            subtitleText: activity.serviceDescription,
-                            taglineText: "\(activity.date), \(activity.time) • \(activity.price)"
-                        )
+                                    Text(activity.centerName)
+                                        .fontWeight(.semibold)
+
+                                    Text(activity.description)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+
+                                    HStack {
+                                        Spacer()
+                                        Text(String(format: "Rs. %.2f", activity.price))
+                                            .fontWeight(.semibold)
+                                    }
+                                }
+                                .padding(.vertical, 8)
+                            }
+                        }
+                        .contentMargins(.vertical, 10)
+                    } else {
+                        Text("List for iOS <17.0 not implemented.")
                     }
+                } else {
+                    FootnoteTextView(text: "No activities found")
                 }
-                .listStyle(.plain)
-                .padding(.top, 16)
 
                 Spacer()
+            }
+            .padding(.top, 32)
+        }
+        .onAppear {
+            viewModel.getCompletedActivities { fetched in
+                viewModel.activities = fetched
             }
         }
     }
@@ -47,4 +77,5 @@ struct ActivitiesView: View {
 #Preview {
     ActivitiesView()
 }
+
 

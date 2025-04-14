@@ -2,7 +2,6 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var globalDto: GlobalDto
-    @State var Email: String = ""
     @StateObject private var viewModel = LoginViewModel()
 
     var body: some View {
@@ -10,17 +9,29 @@ struct LoginView: View {
             CommonBackgroundView()
             VStack(spacing: 16) {
                 Image("logo")
+
                 HeadingTextView(text: "Sign In")
                     .padding(.top, 16)
+
                 NormalTextView(
-                    text: "Access to your account",
+                    text: "Access your account with your email",
                     multilineTextAlignment: .center
                 )
 
                 CommonTextInputView(
-                    hint: "Mobile Number or Email Address",
-                    text: $viewModel.emailOrPhone
+                    hint: "Email Address",
+                    text: $viewModel.email
                 )
+                HStack {
+                    Spacer()
+                    HyperLinkTextView(text: "Forgot password?")
+                        .onTapGesture {
+                            globalDto.paths
+                                .append(
+                                    Route.forgotPasswordVerifyEmail.rawValue
+                                )
+                        }
+                }
 
                 if let errorMessage = viewModel.errorMessage {
                     FootnoteTextView(text: errorMessage)
@@ -28,35 +39,26 @@ struct LoginView: View {
                 }
 
                 Button(action: {
-                    viewModel.login()
+                    if viewModel.login() {
+                        globalDto.email = viewModel.email
+                        globalDto.comingFrom = Route.login.rawValue
+                        globalDto.paths.append(Route.otpVerification.rawValue)
+                    }
                 }) {
                     CommonButtonView(
                         buttonText: "Sign In",
-                        backgroundColor: .brand,
+                        backgroundColor: Color("brandColor"),
                         foregroundColor: .white
                     )
                 }
-                
-
-                Button(action: {
-                   
-                }) {
-                    CommonButtonView(
-                    
-                        buttonText: "Continue with Google",
-                        backgroundColor: .white,
-                        foregroundColor: .black
-                    )
-                }
-                .overlay(RoundedRectangle(cornerRadius: 15).stroke(Color.gray, lineWidth: 1))
-                
 
                 Spacer()
 
                 HStack {
-                    NormalTextView(text: "Not a service provider?")
+                    NormalTextView(text: "Don't have an account?")
                     Button("Register now") {
-                        // Navigation to registration
+                        globalDto.comingFrom = Route.login.rawValue
+                        
                     }
                     .foregroundColor(.brand)
                 }
@@ -68,5 +70,5 @@ struct LoginView: View {
 
 #Preview {
     LoginView()
+        .environmentObject(GlobalDto.shared)
 }
-

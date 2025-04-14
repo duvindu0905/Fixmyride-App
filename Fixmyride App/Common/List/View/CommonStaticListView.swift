@@ -3,6 +3,7 @@ import SwiftUI
 struct CommonStaticListView: View {
     var icon: String
     var titleText: String
+    var descriptionText: String = ""
     var valueColor: Color = Color("commonTextColor")
     var body: some View {
         HStack {

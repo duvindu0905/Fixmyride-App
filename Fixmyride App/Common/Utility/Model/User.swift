@@ -1,8 +1,7 @@
-import SwiftUI
+import Foundation
 
-struct User: Identifiable {
+struct User: Identifiable, Codable {
     var id: UUID = UUID()
-    var username: String
-
+    var email: String
 }
 

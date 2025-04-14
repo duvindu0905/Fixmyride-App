@@ -1,21 +1,23 @@
 import SwiftUI
 
 class LoginViewModel: ObservableObject {
-    @Published var emailOrPhone: String = ""
-    @Published var password: String = ""
-    @Published var isAuthenticated: Bool = false
+    @Published var email: String = ""
     @Published var errorMessage: String?
 
-    func login() {
-        // Simulate authentication logic
-        if emailOrPhone.isEmpty || password.isEmpty {
-            errorMessage = "Please enter both email/phone and password."
-            isAuthenticated = false
-        } else {
-            // TODO: Replace with actual authentication logic (API call, database, etc.)
-            isAuthenticated = true
-            errorMessage = nil
+    func login() -> Bool {
+        if email.isEmpty {
+            errorMessage = "Please enter your email."
+            return false
         }
+
+        // ✅ You can add simple validation if needed:
+        if !email.contains("@") || !email.contains(".") {
+            errorMessage = "Please enter a valid email address."
+            return false
+        }
+
+        errorMessage = nil
+        return true
     }
 }
 

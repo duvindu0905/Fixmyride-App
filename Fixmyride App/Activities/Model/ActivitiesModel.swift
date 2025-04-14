@@ -1,16 +1,20 @@
 import SwiftUI
 
-struct ActivitiesModel : Identifiable {
-    var id: UUID = UUID()
-    var bookingID: String
+struct ActivityModel: Identifiable, Codable {
+    var id: String
+    var bookingId: String
     var centerName: String
-    var serviceDescription: String
-    var price: String
+    var description: String
     var date: String
-    var time: String
-    var status: Status
+    var price: Double
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case bookingId
+        case centerName
+        case description
+        case date
+        case price
+    }
 }
 
-enum Status {
-    case pending, upcoming, completed
-}
