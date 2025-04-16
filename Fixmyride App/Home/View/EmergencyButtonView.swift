@@ -1,8 +1,8 @@
 import SwiftUI
 
-struct NotificationButtonView: View {
-    var icon: String = "bell.fill"
-    var iconColor: Color = Color("commonTextColor")
+struct EmergencyButtonView: View {
+    var icon: String = "phone.fill"
+    var iconColor: Color = .red
 
     var body: some View {
         Image(systemName: icon)
@@ -15,12 +15,13 @@ struct NotificationButtonView: View {
             )
             .padding(8) 
             .background(
-                RoundedRectangle(cornerRadius: 12)                     .stroke(iconColor, lineWidth: 1)
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(iconColor, lineWidth: 1)
             )
     }
 }
 
 #Preview {
-    NotificationButtonView()
+    EmergencyButtonView()
 }
 

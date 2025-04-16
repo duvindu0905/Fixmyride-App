@@ -22,11 +22,11 @@ struct ProfileView: View {
                         .padding(.horizontal)
 
                         VStack(spacing: 0) {
-                            CommonStaticListView(icon: "", titleText: "First Name", descriptionText: user.firstName)
-                            CommonStaticListView(icon: "", titleText: "Last Name", descriptionText: user.lastName)
-                            CommonStaticListView(icon: "", titleText: "Email", descriptionText: user.email)
-                            CommonStaticListView(icon: "", titleText: "Phone Number", descriptionText: String(user.phoneNumber))
-                            CommonStaticListView(icon: "", titleText: "Member Since", descriptionText: user.memberSince)
+                            CommonStaticListView(icon: "", titleText: "First Name", valueText: user.firstName)
+                            CommonStaticListView(icon: "", titleText: "Last Name", valueText: user.lastName)
+                            CommonStaticListView(icon: "", titleText: "Email", valueText: user.email)
+                            CommonStaticListView(icon: "", titleText: "Phone Number", valueText: String(user.phoneNumber))
+                            CommonStaticListView(icon: "", titleText: "Member Since", valueText: user.memberSince)
                         }
                         .background(Color.white)
                         .cornerRadius(12)

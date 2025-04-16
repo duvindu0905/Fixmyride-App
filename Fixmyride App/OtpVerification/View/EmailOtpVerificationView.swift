@@ -73,7 +73,6 @@ struct EmailOtpVerificationView: View {
     }
 
     func verifyOtp(otp: String) async {
-        // ✅ Add email as query param
         guard let url = URL(string: "https://4wxr949qfc.execute-api.ap-southeast-1.amazonaws.com/live/api/verify-otp?email=\(globalDto.email)") else {
             errorMessage = "Invalid URL"
             return
@@ -89,11 +88,7 @@ struct EmailOtpVerificationView: View {
             let (_, response) = try await URLSession.shared.data(for: request)
             if let res = response as? HTTPURLResponse, res.statusCode == 200 {
                 DispatchQueue.main.async {
-                    if globalDto.comingFrom == Route.forgotPasswordVerifyEmail.rawValue {
-                        globalDto.paths.append(Route.forgotPasswordResetPassword.rawValue)
-                    } else if globalDto.comingFrom == Route.login.rawValue {
-                        globalDto.paths = [Route.home.rawValue]
-                    }
+                    globalDto.paths = [Route.home.rawValue]
                 }
             } else {
                 DispatchQueue.main.async {

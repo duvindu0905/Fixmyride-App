@@ -3,8 +3,9 @@ import SwiftUI
 struct CommonStaticListView: View {
     var icon: String
     var titleText: String
-    var descriptionText: String = ""
+    var valueText: String
     var valueColor: Color = Color("commonTextColor")
+
     var body: some View {
         HStack {
             if !icon.isEmpty {
@@ -20,13 +21,18 @@ struct CommonStaticListView: View {
             }
             NormalTextView(text: titleText, foregroundColor: .black)
             Spacer()
-           
+            NormalTextView(text: valueText, foregroundColor: valueColor)
         }
+        .padding(.vertical, 8)
+        .padding(.horizontal)
     }
 }
 
 #Preview {
     CommonStaticListView(
-        icon: "checkmark.circle.fill", titleText: "Availability")
+        icon: "checkmark.circle.fill",
+        titleText: "Availability",
+        valueText: "3"
+    )
 }
 

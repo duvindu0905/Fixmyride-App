@@ -9,6 +9,7 @@ struct LoginView: View {
             CommonBackgroundView()
 
             VStack(spacing: 16) {
+                Spacer()
                 Image("logo")
 
                 HeadingTextView(text: "Sign In")
@@ -24,13 +25,7 @@ struct LoginView: View {
                     text: $viewModel.email
                 )
 
-                HStack {
-                    Spacer()
-                    HyperLinkTextView(text: "Forgot password?")
-                        .onTapGesture {
-                            globalDto.paths.append(Route.forgotPasswordVerifyEmail.rawValue)
-                        }
-                }
+            
 
                 if let errorMessage = viewModel.errorMessage {
                     FootnoteTextView(text: errorMessage)

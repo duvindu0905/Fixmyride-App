@@ -15,11 +15,10 @@ struct HomeView: View {
             CommonBackgroundView()
 
             VStack {
-                // Top Bar
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         SecondaryHeadingTextView(
-                            text: "MONDAY 10 FEBRUARY",
+                            text: "MONDAY 26 FEBRUARY",
                             foregroundColor: Color("commonTextColor"),
                             weight: .heavy,
                             font: .callout
@@ -29,15 +28,27 @@ struct HomeView: View {
 
                     Spacer()
 
-                    Button {
-                        globalDto.paths.append(Route.notification.rawValue)
-                    } label: {
-                        NotificationButtonView(
-                            icon: "bell.fill",
-                            iconColor: Color("brandColor")
-                        )
+                    HStack(spacing: 12) {
+                        Button {
+                            globalDto.paths.append(Route.notification.rawValue)
+                        } label: {
+                            NotificationButtonView(
+                                icon: "bell.fill",
+                                iconColor: Color("brandColor")
+                            )
+                        }
+
+                        Button {
+                            globalDto.paths.append(Route.emergency.rawValue)
+                        } label: {
+                            EmergencyButtonView(
+                                icon: "phone.fill",
+                                iconColor: .red
+                            )
+                        }
                     }
                 }
+
 
                 ScrollView {
                     VStack(spacing: 24) {

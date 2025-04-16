@@ -14,12 +14,8 @@ struct FixMyRideApp: App {
                             LoginView()
                         } else if destination == Route.otpVerification.rawValue {
                             EmailOtpVerificationView()
-                        } else if destination == Route.forgotPasswordVerifyEmail.rawValue {
-                            ForgotPasswordVerifyEmailView()
-                        } else if destination == Route.forgotPasswordResetPassword.rawValue {
-                            ResetPasswordView()
                         } else if destination == Route.home.rawValue {
-                            TabLandingView() // 
+                            TabLandingView()
                         } else if destination == Route.profile.rawValue {
                             ProfileView()
                         } else if destination == Route.profileEdit.rawValue {
@@ -28,8 +24,9 @@ struct FixMyRideApp: App {
                             NotificationView()
                         } else if destination == Route.activities.rawValue {
                             ActivitiesView()
+                        } else if destination == Route.emergency.rawValue {
+                            EmergencyContactsView()
                         }
-                        // Add more destinations here if needed
                     }
             }
             .accentColor(Color("brandColor"))
