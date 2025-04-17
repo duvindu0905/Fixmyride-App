@@ -11,7 +11,7 @@ struct TabLandingView: View {
                     Text("Home")
                 }
 
-            NotificationView() // Replace with your actual Search screen if needed
+            MapView()
                 .tabItem {
                     Image(systemName: "magnifyingglass")
                     Text("Search")

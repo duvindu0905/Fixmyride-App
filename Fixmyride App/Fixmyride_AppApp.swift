@@ -26,7 +26,10 @@ struct FixMyRideApp: App {
                             ActivitiesView()
                         } else if destination == Route.emergency.rawValue {
                             EmergencyContactsView()
+                        }else if destination == Route.garage.rawValue {
+                            MapView()
                         }
+
                     }
             }
             .accentColor(Color("brandColor"))
