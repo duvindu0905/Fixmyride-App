@@ -1,4 +1,5 @@
 import SwiftUI
+import Foundation
 
 enum GarageType: String, Codable {
     case repairCenter, engineering, detailing, painting
@@ -9,7 +10,7 @@ enum AvailabilityLevel: String, Codable {
 }
 
 struct GarageModel: Identifiable, Codable {
-    var id = UUID()
+    var id: String // This will map from _id
     var garageId: Int
     var name: String
     var type: GarageType
@@ -20,10 +21,19 @@ struct GarageModel: Identifiable, Codable {
     var imageUrls: [String]?
     var availabilityInDouble: Double
     var availabilityInString: AvailabilityLevel
+
+    enum CodingKeys: String, CodingKey {
+        case id = "_id"
+        case garageId
+        case name
+        case type
+        case mobile
+        case latitude
+        case longitude
+        case address
+        case imageUrls
+        case availabilityInDouble
+        case availabilityInString
+    }
 }
 
-struct MapModel {
-    var mapId: Int
-    var name: String
-    var garages: [GarageModel]
-}
