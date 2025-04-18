@@ -87,8 +87,10 @@ struct MapView: View {
         Group {
             if isSearchBarFocused {
                 VStack {
-                    CommonSearchBarView(isFocused: $isSearchBarFocused, searchTerm: $searchTerm, hint: "Search garages")
-                        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                    VStack(spacing: 16) {
+                        CommonSearchBarView(isFocused: $isSearchBarFocused, searchTerm: $searchTerm, hint: "Search garages")
+                    }
+                  .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
                     List {
                         ScrollView {
@@ -113,11 +115,13 @@ struct MapView: View {
                 .background(.white)
             } else {
                 VStack {
-                    CommonSearchBarView(isFocused: $isSearchBarFocused, searchTerm: $searchTerm, hint: "Search garages")
-
+                    VStack(spacing: 16) {
+                        CommonSearchBarView(isFocused: $isSearchBarFocused, searchTerm: $searchTerm, hint: "Search garages").padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                    }
                     HStack {
-                        NormalTextView(text: "Latest searches", multilineTextAlignment: .leading)
+                        NormalTextView(text: "Latest searches", multilineTextAlignment: .leading).padding(.horizontal, UIScreen.main.bounds.width * 0.05)
                         Spacer()
+                        
                     }
 
                     ScrollView {
@@ -186,7 +190,7 @@ struct MapView: View {
                     }
                 }
             }
-
+            .contentMargins(.vertical, 0)
             Spacer()
         }
         .presentationDetents([.medium, .large])
@@ -198,12 +202,14 @@ struct MapView: View {
     private func garageDetailSheet(garage: GarageModel) -> some View {
         VStack(spacing: 16) {
             HStack {
-                SecondaryHeadingTextView(text: garage.name)
+                SecondaryHeadingTextView(text: garage.name).padding(.horizontal, UIScreen.main.bounds.width * 0.05)
                 Spacer()
+                
                 Button {
                     Task {
                         lookAroundScene = await getLookAroundScene(coordinate: CLLocationCoordinate2D(latitude: garage.latitude, longitude: garage.longitude))
                         isShowingLookAroundScene = lookAroundScene != nil
+                        
                     }
                 } label: {
                     CommonIconButtonView(icon: "dot.viewfinder")
@@ -212,6 +218,7 @@ struct MapView: View {
                 Button { selectedGarage = nil } label: {
                     CommonIconButtonView(icon: "xmark")
                 }
+                .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
             }
 
             NormalTextView(text: garage.address, multilineTextAlignment: .leading)
@@ -223,25 +230,28 @@ struct MapView: View {
                 CommonButtonView(buttonText: "Show Me Direction", backgroundColor: Color("inputBackground"), foregroundColor: Color("brandColor"))
             }
 
-            AvailabilityCardView(
-                availabilityValueInDouble: garage.availabilityInDouble,
-                availabilityValueInString: garage.availabilityInString.rawValue
-            )
+            .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
             if let imageUrls = garage.imageUrls {
                 ScrollView {
                     LazyVGrid(columns: gridItems) {
                         ForEach(imageUrls, id: \.self) { url in
                             CommonSquareImageView(url: url)
+                       
                         }
-                    }
+
+                    }.padding(.horizontal, UIScreen.main.bounds.width * 0.05)
                 }
+
             }
 
             Spacer()
+            
         }
-        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
         .presentationDetents([.medium, .large])
+        .ignoresSafeArea()
+        .frame(maxWidth: .infinity)
+        .padding(.top, 16)
         .background(Color("commonBackground"))
     }
 
