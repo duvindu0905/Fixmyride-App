@@ -68,6 +68,7 @@ struct ProfileEditView: View {
                             }
                         }
                         .contentMargins(.vertical, 40)
+                        
                     }
                 }
                 .padding(.top, 32)

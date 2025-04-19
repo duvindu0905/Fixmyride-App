@@ -1,5 +1,5 @@
-import SwiftUI
 import MapKit
+import SwiftUI
 
 struct MapView: View {
     @EnvironmentObject var globalDto: GlobalDto
@@ -35,13 +35,21 @@ struct MapView: View {
     var body: some View {
         Map {
             ForEach(viewModel.garages) { garage in
-                Annotation(garage.name,
-                           coordinate: CLLocationCoordinate2D(latitude: garage.latitude, longitude: garage.longitude),
-                           anchor: .bottom) {
+                Annotation(
+                    garage.name,
+                    coordinate: CLLocationCoordinate2D(
+                        latitude: garage.latitude,
+                        longitude: garage.longitude
+                    ),
+                    anchor: .bottom
+                ) {
                     Button {
                         selectedGarage = garage
                     } label: {
-                        CommonAnnotationView(backgroundColor: .blue, icon: "wrench.fill")
+                        CommonAnnotationView(
+                            backgroundColor: .blue,
+                            icon: "wrench.fill"
+                        )
                     }
                 }
             }
@@ -60,7 +68,10 @@ struct MapView: View {
             MapScaleView()
         }
         .mapStyle(.standard(elevation: .realistic))
-        .lookAroundViewer(isPresented: $isShowingLookAroundScene, initialScene: lookAroundScene)
+        .lookAroundViewer(
+            isPresented: $isShowingLookAroundScene,
+            initialScene: lookAroundScene
+        )
         .onAppear {
             locationManager.requestWhenInUseAuthorization()
             viewModel.fetchGarages()
@@ -88,9 +99,13 @@ struct MapView: View {
             if isSearchBarFocused {
                 VStack {
                     VStack(spacing: 16) {
-                        CommonSearchBarView(isFocused: $isSearchBarFocused, searchTerm: $searchTerm, hint: "Search garages")
+                        CommonSearchBarView(
+                            isFocused: $isSearchBarFocused,
+                            searchTerm: $searchTerm,
+                            hint: "Search garages"
+                        )
                     }
-                  .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                    .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
                     List {
                         ScrollView {
@@ -116,19 +131,36 @@ struct MapView: View {
             } else {
                 VStack {
                     VStack(spacing: 16) {
-                        CommonSearchBarView(isFocused: $isSearchBarFocused, searchTerm: $searchTerm, hint: "Search garages").padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                        CommonSearchBarView(
+                            isFocused: $isSearchBarFocused,
+                            searchTerm: $searchTerm,
+                            hint: "Search garages"
+                        ).padding(
+                            .horizontal,
+                            UIScreen.main.bounds.width * 0.05
+                        )
                     }
                     HStack {
-                        NormalTextView(text: "Latest searches", multilineTextAlignment: .leading).padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                        NormalTextView(
+                            text: "Latest searches",
+                            multilineTextAlignment: .leading
+                        ).padding(
+                            .horizontal,
+                            UIScreen.main.bounds.width * 0.05
+                        )
                         Spacer()
-                        
+
                     }
 
                     ScrollView {
                         LazyVGrid(columns: gridItems) {
                             ForEach(filteredSearches) { garage in
                                 if let firstUrl = garage.imageUrls?.first {
-                                    CommonEventCardView(title: garage.name, day: garage.name, imageUrl: firstUrl)
+                                    CommonEventCardView(
+                                        title: garage.name,
+                                        day: garage.name,
+                                        imageUrl: firstUrl
+                                    )
                                 }
                             }
                         }
@@ -168,7 +200,9 @@ struct MapView: View {
             HStack {
                 SecondaryHeadingTextView(text: "Directions")
                 Spacer()
-                Button { isShowingNavigationSheet = false } label: {
+                Button {
+                    isShowingNavigationSheet = false
+                } label: {
                     CommonIconButtonView(icon: "xmark")
                 }
             }
@@ -186,7 +220,11 @@ struct MapView: View {
             List {
                 if let steps {
                     ForEach(steps, id: \.self) { step in
-                        CommonStaticListView(icon: "checkmark.circle.fill", titleText: step.instructions, valueText: "")
+                        CommonStaticListView(
+                            icon: "checkmark.circle.fill",
+                            titleText: step.instructions,
+                            valueText: ""
+                        )
                     }
                 }
             }
@@ -202,32 +240,54 @@ struct MapView: View {
     private func garageDetailSheet(garage: GarageModel) -> some View {
         VStack(spacing: 16) {
             HStack {
-                SecondaryHeadingTextView(text: garage.name).padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                SecondaryHeadingTextView(text: garage.name).padding(
+                    .horizontal,
+                    UIScreen.main.bounds.width * 0.05
+                )
                 Spacer()
-                
+
                 Button {
                     Task {
-                        lookAroundScene = await getLookAroundScene(coordinate: CLLocationCoordinate2D(latitude: garage.latitude, longitude: garage.longitude))
+                        lookAroundScene = await getLookAroundScene(
+                            coordinate: CLLocationCoordinate2D(
+                                latitude: garage.latitude,
+                                longitude: garage.longitude
+                            )
+                        )
                         isShowingLookAroundScene = lookAroundScene != nil
-                        
+
                     }
                 } label: {
                     CommonIconButtonView(icon: "dot.viewfinder")
                 }
 
-                Button { selectedGarage = nil } label: {
+                Button {
+                    selectedGarage = nil
+                } label: {
                     CommonIconButtonView(icon: "xmark")
                 }
                 .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
             }
 
-            NormalTextView(text: garage.address, multilineTextAlignment: .leading)
+            NormalTextView(
+                text: garage.address,
+                multilineTextAlignment: .leading
+            )
 
             Button {
-                getDirection(destination: CLLocationCoordinate2D(latitude: garage.latitude, longitude: garage.longitude))
+                getDirection(
+                    destination: CLLocationCoordinate2D(
+                        latitude: garage.latitude,
+                        longitude: garage.longitude
+                    )
+                )
                 isShowingNavigationSheet = true
             } label: {
-                CommonButtonView(buttonText: "Show Me Direction", backgroundColor: Color("inputBackground"), foregroundColor: Color("brandColor"))
+                CommonButtonView(
+                    buttonText: "Show Me Direction",
+                    backgroundColor: Color("inputBackground"),
+                    foregroundColor: Color("brandColor")
+                )
             }
 
             .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
@@ -237,7 +297,7 @@ struct MapView: View {
                     LazyVGrid(columns: gridItems) {
                         ForEach(imageUrls, id: \.self) { url in
                             CommonSquareImageView(url: url)
-                       
+
                         }
 
                     }.padding(.horizontal, UIScreen.main.bounds.width * 0.05)
@@ -246,7 +306,7 @@ struct MapView: View {
             }
 
             Spacer()
-            
+
         }
         .presentationDetents([.medium, .large])
         .ignoresSafeArea()
@@ -257,15 +317,24 @@ struct MapView: View {
 
     func getDirection(destination: CLLocationCoordinate2D) {
         Task {
-            guard let userLocation = await getUserLocation() else { return }
-
+            guard var userLocation = await getUserLocation() else { return }
+            userLocation = CLLocationCoordinate2D(
+                latitude: 37.3349,
+                longitude: -122.0090
+            )
+            
             let request = MKDirections.Request()
-            request.source = MKMapItem(placemark: .init(coordinate: userLocation))
-            request.destination = MKMapItem(placemark: .init(coordinate: destination))
+            request.source = MKMapItem(
+                placemark: .init(coordinate: userLocation)
+            )
+            request.destination = MKMapItem(
+                placemark: .init(coordinate: destination)
+            )
             request.transportType = .walking
 
             do {
-                let directions = try await MKDirections(request: request).calculate()
+                let directions = try await MKDirections(request: request)
+                    .calculate()
                 if let route = directions.routes.first {
                     self.route = route
                     self.distance = route.distance
@@ -281,7 +350,9 @@ struct MapView: View {
     func getUserLocation() async -> CLLocationCoordinate2D? {
         let updates = CLLocationUpdate.liveUpdates()
         do {
-            let update = try await updates.first { $0.location?.coordinate != nil }
+            let update = try await updates.first {
+                $0.location?.coordinate != nil
+            }
             return update?.location?.coordinate
         } catch {
             print("cannot get user location")
@@ -289,9 +360,12 @@ struct MapView: View {
         }
     }
 
-    func getLookAroundScene(coordinate: CLLocationCoordinate2D) async -> MKLookAroundScene? {
+    func getLookAroundScene(coordinate: CLLocationCoordinate2D) async
+        -> MKLookAroundScene?
+    {
         do {
-            return try await MKLookAroundSceneRequest(coordinate: coordinate).scene
+            return try await MKLookAroundSceneRequest(coordinate: coordinate)
+                .scene
         } catch {
             print("Cannot get look around scene")
             return nil
@@ -303,4 +377,3 @@ struct MapView: View {
     MapView()
         .environmentObject(GlobalDto.shared)
 }
-

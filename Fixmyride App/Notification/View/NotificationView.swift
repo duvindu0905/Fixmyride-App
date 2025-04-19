@@ -25,8 +25,10 @@ struct NotificationView: View {
                             }
                         }
                         .contentMargins(.vertical, 10)
+                        Spacer()
+                        
                     } else {
-                        Text("List for iOS <17.0 not implemented.")
+                        Text("List not implemented.")
                     }
                 } else {
                     FootnoteTextView(text: "No data")

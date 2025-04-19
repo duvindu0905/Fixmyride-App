@@ -21,19 +21,25 @@ struct ProfileView: View {
                         }
                        
                         .padding(.horizontal)
-
+                        Spacer()
                         VStack(spacing: 0) {
                             CommonStaticListView(icon: "", titleText: "First Name", valueText: user.firstName)
+                            Spacer()
                             CommonStaticListView(icon: "", titleText: "Last Name", valueText: user.lastName)
-                            CommonStaticListView(icon: "", titleText: "Email", valueText: user.email)
+                            Spacer()
+                            CommonStaticListView(icon: "",
+                                                 titleText: "Email", valueText: user.email)
+                            Spacer()
                             CommonStaticListView(icon: "", titleText: "Phone Number", valueText: String(user.phoneNumber))
+                            Spacer()
                             CommonStaticListView(icon: "", titleText: "Member Since", valueText: user.memberSince)
                         }
                         .background(Color.white)
                         .cornerRadius(12)
+                        
+                        Spacer()
+                        Spacer()
                         .padding(.horizontal)
-                        Spacer()
-                        Spacer()
                         VStack(spacing: 16) {
                             Button {
                                 globalDto.paths.removeAll()

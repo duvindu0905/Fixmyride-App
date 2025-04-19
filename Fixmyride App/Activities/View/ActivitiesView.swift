@@ -40,10 +40,10 @@ struct ActivitiesView: View {
 
                                     Text(activity.centerName)
                                         .fontWeight(.semibold)
-
+                                    Spacer()
                                     Text(activity.description)
-                                        .font(.caption)
-                                        .foregroundColor(.gray)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.black)
 
                                     HStack {
                                         Spacer()

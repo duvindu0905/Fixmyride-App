@@ -34,7 +34,7 @@ struct EmergencyContactsView: View {
                             .foregroundColor(.green)
                             .padding(.trailing, 8)
                     }
-                    .contentShape(Rectangle()) // make whole row tappable
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         
                         showCallAlert = true
