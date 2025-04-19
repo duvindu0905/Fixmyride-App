@@ -9,6 +9,7 @@ enum Route: String {
     case notification = "Notification"
     case activities = "Activities"
     case emergency = "Emergency"
-    case garage = "Garages" 
+    case garage = "Garages"
+    case arCarModification = "ARCarModification"
 }
 

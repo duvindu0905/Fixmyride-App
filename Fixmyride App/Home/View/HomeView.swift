@@ -49,7 +49,6 @@ struct HomeView: View {
                     }
                 }
 
-
                 ScrollView {
                     VStack(spacing: 24) {
 
@@ -67,9 +66,10 @@ struct HomeView: View {
                             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                                 ForEach(services) { service in
                                     Button {
-                                        print("Tapped \(service.title)")
-                                        // Example: Navigate somewhere
-                                        // globalDto.paths.append(Route.booking.rawValue)
+                                        if service.title == "Car Modification" {
+                                            globalDto.paths.append(Route.arCarModification.rawValue)
+                                        }
+                                        // You can add more navigation logic for other services if needed
                                     } label: {
                                         VStack(spacing: 8) {
                                             Image(service.imageName)
@@ -106,5 +106,4 @@ struct HomeView: View {
 #Preview {
     HomeView().environmentObject(GlobalDto.shared)
 }
-
 

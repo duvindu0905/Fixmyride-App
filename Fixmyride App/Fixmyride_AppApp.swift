@@ -28,6 +28,8 @@ struct FixMyRideApp: App {
                             EmergencyContactsView()
                         }else if destination == Route.garage.rawValue {
                             MapView()
+                        }else if destination == Route.arCarModification.rawValue {
+                            ARCarModificationView()
                         }
 
                     }

@@ -19,6 +19,7 @@ struct ProfileView: View {
                                     globalDto.paths.append(Route.profileEdit.rawValue)
                                 }
                         }
+                       
                         .padding(.horizontal)
 
                         VStack(spacing: 0) {
@@ -31,7 +32,8 @@ struct ProfileView: View {
                         .background(Color.white)
                         .cornerRadius(12)
                         .padding(.horizontal)
-
+                        Spacer()
+                        Spacer()
                         VStack(spacing: 16) {
                             Button {
                                 globalDto.paths.removeAll()
@@ -45,7 +47,10 @@ struct ProfileView: View {
                                 )
                             }
                         }
-                        .padding(.horizontal)
+                        
+                        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                        Spacer()
+
                     }
                     .padding(.top, 32)
                 }
