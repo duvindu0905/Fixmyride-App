@@ -37,14 +37,14 @@ struct ActivitiesView: View {
                                             .font(.caption)
                                             .foregroundColor(.gray)
                                     }
-
+                                    
                                     Text(activity.centerName)
                                         .fontWeight(.semibold)
                                     Spacer()
                                     Text(activity.description)
                                         .fontWeight(.semibold)
                                         .foregroundColor(.black)
-
+                                    
                                     HStack {
                                         Spacer()
                                         Text(String(format: "Rs. %.2f", activity.price))

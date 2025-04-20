@@ -30,7 +30,7 @@ struct TabLandingView: View {
                 }
         }
         .navigationBarBackButtonHidden(true)
-        .accentColor(Color("brandColor")) // Set global tab tint color
+        .accentColor(Color("brandColor")) 
     }
 }
 

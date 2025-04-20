@@ -30,6 +30,12 @@ struct FixMyRideApp: App {
                             MapView()
                         }else if destination == Route.arCarModification.rawValue {
                             ARCarModificationView()
+                        }else if destination == Route.breakdown.rawValue {
+                            BreakdownFlowView()
+                        }else if destination == Route.carRepair.rawValue {
+                            CarRepairFlowView()
+                        }else if destination == Route.carWash.rawValue {
+                            CarWashFlowView()
                         }
 
                     }

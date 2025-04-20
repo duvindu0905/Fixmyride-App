@@ -3,16 +3,16 @@ import SwiftUI
 class GlobalDto: ObservableObject {
     static let shared = GlobalDto()
 
-    // Whether the user is logged in
+    // user is logged in
     @Published var isLoggedIn: Bool = false
 
     // Logged-in user's email
     @Published var email: String = ""
 
-    // Where the user came from (e.g., "registration", "forgotPassword")
+    // Where the user came from
     @Published var comingFrom: String = ""
 
-    // Navigation stack path used in NavigationStack
+    // Navigation stack 
     @Published var paths: [String] = []
 }
 

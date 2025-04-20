@@ -1,5 +1,5 @@
 import SwiftUI
-import Foundation
+import MapKit
 
 enum GarageType: String, Codable {
     case repairCenter, engineering, detailing, painting

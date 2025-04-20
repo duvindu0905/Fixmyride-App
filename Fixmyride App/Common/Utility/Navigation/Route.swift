@@ -11,5 +11,8 @@ enum Route: String {
     case emergency = "Emergency"
     case garage = "Garages"
     case arCarModification = "ARCarModification"
+    case breakdown = "Breakdown"
+    case carRepair = "CarRepair"
+    case carWash   = "CarWash"
 }
 

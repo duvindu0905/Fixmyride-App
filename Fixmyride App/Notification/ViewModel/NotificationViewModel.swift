@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 
 class NotificationViewModel: ObservableObject {
     static let shared = NotificationViewModel()

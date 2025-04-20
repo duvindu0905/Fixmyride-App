@@ -15,6 +15,7 @@ struct HomeView: View {
             CommonBackgroundView()
 
             VStack {
+      
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         SecondaryHeadingTextView(
@@ -49,27 +50,39 @@ struct HomeView: View {
                     }
                 }
 
+   
                 ScrollView {
                     VStack(spacing: 24) {
-
-                        // Banner
+            
                         Image("main_banner")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(height: 180)
                             .clipShape(RoundedRectangle(cornerRadius: 16))
 
-                        // Services Section
+                        
                         VStack(alignment: .leading, spacing: 16) {
                             TitleTextView(text: "Services")
 
                             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
                                 ForEach(services) { service in
                                     Button {
-                                        if service.title == "Car Modification" {
+                                        switch service.title {
+                                        case "Car Breakdown":
+                                            globalDto.paths.append(Route.breakdown.rawValue)
+
+                                        case "Car Repair":
+                                            globalDto.paths.append(Route.carRepair.rawValue)
+
+                                        case "Car Wash":
+                                            globalDto.paths.append(Route.carWash.rawValue)
+
+                                        case "Car Modification":
                                             globalDto.paths.append(Route.arCarModification.rawValue)
+
+                                        default:
+                                            break
                                         }
-                                        // You can add more navigation logic for other services if needed
                                     } label: {
                                         VStack(spacing: 8) {
                                             Image(service.imageName)

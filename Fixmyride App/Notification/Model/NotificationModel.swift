@@ -1,4 +1,4 @@
-import Foundation
+import SwiftUI
 
 struct NotificationModel: Identifiable, Codable {
     var id: String
