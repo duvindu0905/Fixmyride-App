@@ -1,13 +1,21 @@
 import SwiftUI
+import UserNotifications
 
 @main
 struct FixMyRideApp: App {
     @StateObject var globalDto = GlobalDto.shared
+    
+    private let notificationDelegate = NotificationDelegate()
 
+       init() {
+           LocalNotificationManager.shared.requestPermission()
+           UNUserNotificationCenter.current().delegate = notificationDelegate 
+       }
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $globalDto.paths) {
-                LoginView() // Root view on launch
+                LoginView()
 
                     .navigationDestination(for: String.self) { destination in
                         if destination == Route.login.rawValue {

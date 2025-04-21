@@ -53,7 +53,8 @@ class BreakdownViewModel: NSObject, ObservableObject, CLLocationManagerDelegate 
     func postBooking(mechanic: Mechanic, completion: @escaping (Bool) -> Void) {
         guard let url = URL(string: "https://4wxr949qfc.execute-api.ap-southeast-1.amazonaws.com/live/api/breakdown/bookings") else { return }
 
-        let bookingId = UUID().uuidString
+        let bookingId = String(Int.random(in: 70000...99999))
+
         let email = GlobalDto.shared.email
 
         let body: [String: Any] = [

@@ -264,7 +264,6 @@ struct BreakdownFlowView: View {
                                     .onTapGesture {
                                         viewModel.postBooking(mechanic: mechanic) { success in
                                             if success {
-                                                LocalNotificationManager.shared.requestPermission()
                                                 LocalNotificationManager.shared.scheduleNotification(
                                                     title: "Booking Confirmed!",
                                                     body: "Mechanic: \(mechanic.name) at your service."
