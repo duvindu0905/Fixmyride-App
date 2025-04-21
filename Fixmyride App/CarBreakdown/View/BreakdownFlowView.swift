@@ -164,130 +164,137 @@ struct BreakdownFlowView: View {
                 
                 
                 else if currentStep == 3 {
-            
-                        if let mechanic = viewModel.selectedMechanic {
-                            ZStack {
-                                CommonBackgroundView()
-                                
-                                ScrollView {
-                                    VStack(alignment: .leading, spacing: 20) {
-                                        HStack {
-                                            Spacer()
-                                            SecondaryHeadingTextView(text: "Confirm Booking")
-                                            Spacer()
-                                        }
-                                        
+                    if let mechanic = viewModel.selectedMechanic {
+                        ZStack {
+                            CommonBackgroundView()
+
+                            ScrollView {
+                                VStack(alignment: .leading, spacing: 20) {
+                                    HStack {
                                         Spacer()
-                                        
-                                        VStack(alignment: .leading, spacing: 12) {
-                                            HStack {
-                                                Image(systemName: "person.crop.circle.fill")
-                                                    .resizable()
-                                                    .frame(width: 40, height: 40)
-                                                    .foregroundColor(.blue)
-                                                
-                                                VStack(alignment: .leading, spacing: 4) {
-                                                    Text(mechanic.name)
-                                                        .fontWeight(.semibold)
-                                                    Text("\(Int(mechanic.distance)) km away")
-                                                        .font(.subheadline)
-                                                        .foregroundColor(.gray)
-                                                    Text("View Location")
-                                                        .font(.footnote)
-                                                        .foregroundColor(.red)
-                                                }
-                                                
-                                                Spacer()
-                                            }
-                                            
-                                            Divider()
-                                            
-                                            HStack {
-                                                Text("Contact")
-                                                    .fontWeight(.medium)
-                                                Spacer()
-                                                Image(systemName: "phone.fill")
-                                                    .foregroundColor(.red)
-                                            }
-                                            
-                                            HStack {
-                                                Text("Availability")
-                                                    .fontWeight(.medium)
-                                                Spacer()
-                                                Text(mechanic.isAvailable ? "Available" : "Unavailable")
-                                                    .foregroundColor(.green)
-                                                    .fontWeight(.semibold)
-                                            }
-                                        }
-                                        .padding()
-                                        .background(Color.white)
-                                        .cornerRadius(20)
-                                        .shadow(radius: 4)
-                                        
-                                        Spacer()
-                                        
-                                        VStack(alignment: .leading, spacing: 12) {
-                                            Text("Booking Summary")
-                                                .fontWeight(.bold)
-                                            
-                                            HStack {
-                                                Text("Service Type")
-                                                Spacer()
-                                                Text(viewModel.selectedType?.title ?? "")
-                                                    .foregroundColor(.gray)
-                                            }
-                                            
-                                            HStack {
-                                                Text("Date")
-                                                Spacer()
-                                                Text(viewModel.selectedDate.formatted(date: .numeric, time: .omitted))
-                                                    .foregroundColor(.gray)
-                                            }
-                                            
-                                            HStack {
-                                                Text("Service Cost")
-                                                Spacer()
-                                                Text("Rs. \(Int(mechanic.price))")
-                                                    .foregroundColor(.gray)
-                                            }
-                                        }
-                                        .padding()
-                                        .background(Color.white)
-                                        .cornerRadius(20)
-                                        .shadow(radius: 4)
-                                        
-                                        CommonButtonView(
-                                            buttonText: "Confirm Booking",
-                                            backgroundColor: Color("inputBackground"),
-                                            foregroundColor: Color.blue
-                                        )
-                                        .padding(.top, 12)
-                                        .onTapGesture {
-                                            LocalNotificationManager.shared.requestPermission()
-                                            LocalNotificationManager.shared.scheduleNotification(
-                                                title: "Booking Confirmed!",
-                                                body: "Mechanic: \(mechanic.name) at your service."
-                                            )
-                                            
-                                            withAnimation {
-                                                showConfirmationToast = true
-                                            }
-                                            
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                                                withAnimation {
-                                                    showConfirmationToast = false
-                                                }
-                                            }
-                                        }
-                                        
+                                        SecondaryHeadingTextView(text: "Confirm Booking")
                                         Spacer()
                                     }
-                                    .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
-                                    .padding(.top, 16)
+
+                                    Spacer()
+
+                                    VStack(alignment: .leading, spacing: 12) {
+                                        HStack {
+                                            Image(systemName: "person.crop.circle.fill")
+                                                .resizable()
+                                                .frame(width: 40, height: 40)
+                                                .foregroundColor(.blue)
+
+                                            VStack(alignment: .leading, spacing: 4) {
+                                                Text(mechanic.name)
+                                                    .fontWeight(.semibold)
+                                                Text("\(Int(mechanic.distance)) km away")
+                                                    .font(.subheadline)
+                                                    .foregroundColor(.gray)
+                                                Text("View Location")
+                                                    .font(.footnote)
+                                                    .foregroundColor(.red)
+                                            }
+
+                                            Spacer()
+                                        }
+
+                                        Divider()
+
+                                        HStack {
+                                            Text("Contact")
+                                                .fontWeight(.medium)
+                                            Spacer()
+                                            Image(systemName: "phone.fill")
+                                                .foregroundColor(.red)
+                                        }
+
+                                        HStack {
+                                            Text("Availability")
+                                                .fontWeight(.medium)
+                                            Spacer()
+                                            Text(mechanic.isAvailable ? "Available" : "Unavailable")
+                                                .foregroundColor(.green)
+                                                .fontWeight(.semibold)
+                                        }
+                                    }
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(20)
+                                    .shadow(radius: 4)
+
+                                    Spacer()
+
+                                    VStack(alignment: .leading, spacing: 12) {
+                                        Text("Booking Summary")
+                                            .fontWeight(.bold)
+
+                                        HStack {
+                                            Text("Service Type")
+                                            Spacer()
+                                            Text(viewModel.selectedType?.title ?? "")
+                                                .foregroundColor(.gray)
+                                        }
+
+                                        HStack {
+                                            Text("Date")
+                                            Spacer()
+                                            Text(viewModel.selectedDate.formatted(date: .numeric, time: .omitted))
+                                                .foregroundColor(.gray)
+                                        }
+
+                                        HStack {
+                                            Text("Service Cost")
+                                            Spacer()
+                                            Text("Rs. \(Int(mechanic.price))")
+                                                .foregroundColor(.gray)
+                                        }
+                                    }
+                                    .padding()
+                                    .background(Color.white)
+                                    .cornerRadius(20)
+                                    .shadow(radius: 4)
+
+                                    CommonButtonView(
+                                        buttonText: "Confirm Booking",
+                                        backgroundColor: Color("inputBackground"),
+                                        foregroundColor: Color.blue
+                                    )
+                                    .padding(.top, 12)
+                                    .onTapGesture {
+                                        viewModel.postBooking(mechanic: mechanic) { success in
+                                            if success {
+                                                LocalNotificationManager.shared.requestPermission()
+                                                LocalNotificationManager.shared.scheduleNotification(
+                                                    title: "Booking Confirmed!",
+                                                    body: "Mechanic: \(mechanic.name) at your service."
+                                                )
+
+                                                withAnimation {
+                                                    showConfirmationToast = true
+                                                }
+
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                                                    withAnimation {
+                                                        showConfirmationToast = false
+                                                        currentStep = 0
+                                                    }
+                                                }
+                                            } else {
+                                                print("❌ Booking creation failed.")
+                                            }
+                                        }
+                                    }
+
+                                    Spacer()
                                 }
+                                .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                                .padding(.top, 16)
                             }
                         }
                     }
+                }
+
                 }
                 
             

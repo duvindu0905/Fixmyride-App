@@ -7,13 +7,16 @@ struct BreakdownType: Identifiable {
     let iconName: String
 }
 
-struct Mechanic: Identifiable {
-    let id = UUID()
+struct Mechanic: Identifiable, Codable {
+    var id: String { _id } 
+    let _id: String
     let name: String
     let distance: Double
     let price: Double
-    let location: CLLocationCoordinate2D
     let contact: String
     let isAvailable: Bool
+    let latitude: Double
+    let longitude: Double
 }
+
 

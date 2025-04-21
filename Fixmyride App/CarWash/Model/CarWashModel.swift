@@ -12,8 +12,8 @@ struct WashType: Identifiable {
 struct WashStation: Identifiable {
     let id = UUID()
     let name: String
-    let distance: Double       // km
-    let price: Double          // LKR
+    let distance: Double
+    let price: Double          
     let isAvailable: Bool
     let contact: String
 }
