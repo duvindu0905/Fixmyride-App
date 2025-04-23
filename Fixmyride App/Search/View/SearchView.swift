@@ -330,7 +330,7 @@ struct MapView: View {
             request.destination = MKMapItem(
                 placemark: .init(coordinate: destination)
             )
-            request.transportType = .walking
+            request.transportType = .automobile
 
             do {
                 let directions = try await MKDirections(request: request)

@@ -8,9 +8,9 @@ struct BreakdownFlowView: View {
     @State private var isSearchFocused: Bool = false
     @State private var showConfirmationToast = false
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 6.9271, longitude: 79.8612),
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-    )
+          center: CLLocationCoordinate2D(latitude: 37.3349, longitude: -122.0090),
+          span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+      )
     
     let types: [BreakdownType] = [
         .init(title: "Jump Start Only", iconName: "bolt.car"),
@@ -233,21 +233,21 @@ struct BreakdownFlowView: View {
                                             Text("Service Type")
                                             Spacer()
                                             Text(viewModel.selectedType?.title ?? "")
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(.blue)
                                         }
 
                                         HStack {
                                             Text("Date")
                                             Spacer()
                                             Text(viewModel.selectedDate.formatted(date: .numeric, time: .omitted))
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(.blue)
                                         }
 
                                         HStack {
                                             Text("Service Cost")
                                             Spacer()
                                             Text("Rs. \(Int(mechanic.price))")
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(.blue)
                                         }
                                     }
                                     .padding()

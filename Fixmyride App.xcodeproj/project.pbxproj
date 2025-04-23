@@ -401,6 +401,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Fixmyride-App-Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for augmented reality features.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to let you securely sign in to your FixMyRide account.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to show nearby garages and directions.\n";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -434,6 +435,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Fixmyride-App-Info.plist";
 				INFOPLIST_KEY_NSCameraUsageDescription = "This app uses the camera for augmented reality features.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "We use Face ID to let you securely sign in to your FixMyRide account.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "We use your location to show nearby garages and directions.\n";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

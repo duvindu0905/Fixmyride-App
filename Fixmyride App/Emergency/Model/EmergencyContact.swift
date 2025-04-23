@@ -1,4 +1,5 @@
 import SwiftUI
+import CallKit
 
 struct EmergencyContact: Identifiable {
     let id = UUID()

@@ -4,9 +4,9 @@ import MapKit
 struct CarRepairFlowView: View {
     @ObservedObject var viewModel = CarRepairViewModel.shared
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 6.9271, longitude: 79.8612),
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-    )
+          center: CLLocationCoordinate2D(latitude: 37.3349, longitude: -122.0090),
+          span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+      )
     @State private var searchTerm: String = ""
     @State private var isSearchFocused: Bool = false
     @State private var showConfirmationToast = false
@@ -23,6 +23,7 @@ struct CarRepairFlowView: View {
                             TitleTextView(text: "Car Repair Types")
                             Spacer()
                         }
+                        .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
                         List {
                             Section {
@@ -43,7 +44,7 @@ struct CarRepairFlowView: View {
                                     } label: {
                                         HStack {
                                             Image(systemName: type.iconName)
-                                                .foregroundColor(.orange)
+                                                .foregroundColor(.blue)
                                             Text(type.title)
                                             Spacer()
                                             Image(systemName: "chevron.right")
@@ -253,28 +254,28 @@ struct CarRepairFlowView: View {
                                         Text("Service Type")
                                         Spacer()
                                         Text(viewModel.selectedRepairType?.title ?? "")
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(.blue)
                                     }
 
                                     HStack {
                                         Text("Date")
                                         Spacer()
                                         Text(viewModel.selectedDate.formatted(date: .numeric, time: .omitted))
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(.blue)
                                     }
 
                                     HStack {
                                         Text("Time Slot")
                                         Spacer()
                                         Text(viewModel.selectedTimeSlot ?? "")
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(.blue)
                                     }
 
                                     HStack {
                                         Text("Service Cost")
                                         Spacer()
                                         Text("Rs. \(Int(station.price))")
-                                            .foregroundColor(.gray)
+                                            .foregroundColor(.blue)
                                     }
                                 }
                                 .padding()

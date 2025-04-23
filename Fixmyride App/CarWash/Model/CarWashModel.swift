@@ -1,7 +1,6 @@
 import SwiftUI
 import MapKit
 
-
 struct WashType: Identifiable {
     let id = UUID()
     let title: String

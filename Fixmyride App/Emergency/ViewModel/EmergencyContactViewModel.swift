@@ -1,5 +1,6 @@
 import SwiftUI
 import CoreData
+import CallKit
 
 class EmergencyContactViewModel: ObservableObject {
     static let shared = EmergencyContactViewModel()

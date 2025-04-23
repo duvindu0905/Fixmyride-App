@@ -7,7 +7,7 @@ class ActivitiesViewModel: ObservableObject {
 
     private init() {}
 
-    // MARK: - Completed Activities
+ 
     func getCompletedActivities(completion: @escaping ([ActivityModel]) -> Void) {
         guard let url = URL(string: "https://4wxr949qfc.execute-api.ap-southeast-1.amazonaws.com/live/api/activities/completed") else {
             print("❌ Invalid Completed URL")
@@ -37,7 +37,6 @@ class ActivitiesViewModel: ObservableObject {
         }.resume()
     }
 
-    // MARK: - Upcoming Activities
     func getUpcomingActivities(completion: @escaping ([ActivityModel]) -> Void) {
         guard let url = URL(string: "https://4wxr949qfc.execute-api.ap-southeast-1.amazonaws.com/live/api/breakdown/bookings/upcoming") else {
             print("❌ Invalid Upcoming URL")
@@ -72,7 +71,7 @@ class ActivitiesViewModel: ObservableObject {
         }.resume()
     }
 
-    // MARK: - Date Formatting Helper
+    //  Date Formatting
     private func formatActivityDate(_ activity: ActivityModel) -> ActivityModel {
         var updated = activity
 
@@ -97,7 +96,7 @@ class ActivitiesViewModel: ObservableObject {
             updated.date = displayFormatter.string(from: date)
         } else {
             print("❌ Could not parse: \(updated.date)")
-            // updated.date = updated.date ← REMOVE this line
+            
         }
 
 

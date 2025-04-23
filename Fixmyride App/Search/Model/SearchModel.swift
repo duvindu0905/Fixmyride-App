@@ -10,7 +10,7 @@ enum AvailabilityLevel: String, Codable {
 }
 
 struct GarageModel: Identifiable, Codable {
-    var id: String // This will map from _id
+    var id: String 
     var garageId: Int
     var name: String
     var type: GarageType

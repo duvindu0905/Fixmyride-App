@@ -1,4 +1,5 @@
 import SwiftUI
+import CallKit
 
 struct EmergencyContactsView: View {
     @ObservedObject var viewModel = EmergencyContactViewModel.shared

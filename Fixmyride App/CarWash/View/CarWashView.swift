@@ -6,9 +6,9 @@ struct CarWashFlowView: View {
 
 
     @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 6.9271, longitude: 79.8612),
-        span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-    )
+          center: CLLocationCoordinate2D(latitude: 37.3349, longitude: -122.0090),
+          span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+      )
 
    
     @State private var searchTerm        = ""
@@ -55,6 +55,7 @@ private extension CarWashFlowView {
                 TitleTextView(text: "Car Wash Types")
                 Spacer()
             }
+            .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
             List {
                 Section {
@@ -281,28 +282,28 @@ private extension CarWashFlowView {
                             Text("Service Type")
                             Spacer()
                             Text(viewModel.selectedWashType?.title ?? "")
-                                .foregroundColor(.gray)
+                                .foregroundColor(.blue)
                         }
 
                         HStack {
                             Text("Date")
                             Spacer()
                             Text(viewModel.selectedDate.formatted(date: .numeric, time: .omitted))
-                                .foregroundColor(.gray)
+                                .foregroundColor(.blue)
                         }
 
                         HStack {
                             Text("Time Slot")
                             Spacer()
                             Text(viewModel.selectedTimeSlot)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.blue)
                         }
 
                         HStack {
                             Text("Service Cost")
                             Spacer()
                             Text("Rs. \(Int(station.price))")
-                                .foregroundColor(.gray)
+                                .foregroundColor(.blue)
                         }
                     }
                     .padding()

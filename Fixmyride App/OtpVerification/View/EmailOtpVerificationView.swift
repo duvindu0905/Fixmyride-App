@@ -8,6 +8,8 @@ struct EmailOtpVerificationView: View {
     @State var timerValue: Int = 0
     @State var errorMessage: String?
 
+    @State private var showFaceIDPrompt = false
+
     var body: some View {
         ZStack {
             CommonBackgroundView()
@@ -36,6 +38,18 @@ struct EmailOtpVerificationView: View {
             .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
         }
         .onAppear { startTimer() }
+        .alert("Enable Face ID Login?", isPresented: $showFaceIDPrompt) {
+            Button("Enable") {
+                BiometricSettings.shared.setFaceIDEnabled(true)
+                globalDto.paths = [Route.home.rawValue]
+            }
+            Button("Not Now", role: .cancel) {
+                BiometricSettings.shared.setFaceIDEnabled(false)
+                globalDto.paths = [Route.home.rawValue]
+            }
+        } message: {
+            Text("Use Face ID for faster login next time.")
+        }
     }
 
     var otpInputField: some View {
@@ -88,7 +102,7 @@ struct EmailOtpVerificationView: View {
             let (_, response) = try await URLSession.shared.data(for: request)
             if let res = response as? HTTPURLResponse, res.statusCode == 200 {
                 DispatchQueue.main.async {
-                    globalDto.paths = [Route.home.rawValue]
+                    showFaceIDPrompt = true
                 }
             } else {
                 DispatchQueue.main.async {
