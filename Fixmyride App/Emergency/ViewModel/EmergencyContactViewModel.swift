@@ -1,16 +1,12 @@
 import SwiftUI
 import CoreData
-import CallKit
 
 class EmergencyContactViewModel: ObservableObject {
     static let shared = EmergencyContactViewModel()
 
     @Published var emergencyContacts: [EmergencyContact] = []
 
-    
     func fetchFromAPI() {
-      
-
         let hardcoded: [EmergencyContact] = [
             EmergencyContact(title: "Police Emergency", phoneNumber: "119", iconName: iconFor(title: "Police Emergency")),
             EmergencyContact(title: "Fire Department", phoneNumber: "110", iconName: iconFor(title: "Fire Department")),
@@ -25,11 +21,9 @@ class EmergencyContactViewModel: ObservableObject {
         }
     }
 
-
     private func saveToCoreData(_ contacts: [EmergencyContact]) {
         let context = CoreDataManager.shared.context
 
-        
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: EmergencyContactEntity.fetchRequest())
         _ = try? context.execute(deleteRequest)
 
@@ -59,7 +53,6 @@ class EmergencyContactViewModel: ObservableObject {
         }
     }
 
-  
     private func iconFor(title: String) -> String {
         let lowercase = title.lowercased()
 

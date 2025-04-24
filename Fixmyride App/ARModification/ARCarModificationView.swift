@@ -8,7 +8,7 @@ struct ARCarModificationView: View {
             ARViewContainer(viewModel: vm)
                 .edgesIgnoringSafeArea(.all)
 
-            // Wheel picker – bottom overlay
+            
             VStack {
                 Spacer()
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -29,7 +29,7 @@ struct ARCarModificationView: View {
                 .padding(.bottom, 12)
             }
         }
-        .navigationTitle("Back")
+     
     }
 }
 

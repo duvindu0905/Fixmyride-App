@@ -1,5 +1,4 @@
 import SwiftUI
-import CallKit
 
 struct EmergencyContactsView: View {
     @ObservedObject var viewModel = EmergencyContactViewModel.shared
@@ -20,7 +19,7 @@ struct EmergencyContactsView: View {
                 .padding(.top, 32)
                 .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
-                List(viewModel.emergencyContacts, id: \.id) { contact in
+                List(viewModel.emergencyContacts) { contact in
                     HStack {
                         CommonNavigationListType2View(
                             icon: contact.iconName,
@@ -37,11 +36,11 @@ struct EmergencyContactsView: View {
                     }
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        
+                        selectedNumber = contact.phoneNumber
+                        selectedTitle = contact.title
                         showCallAlert = true
                     }
                 }
-                
             }
         }
         .onAppear {
@@ -50,14 +49,17 @@ struct EmergencyContactsView: View {
         }
         .alert("Call \(selectedTitle)?", isPresented: $showCallAlert) {
             Button("Call", role: .destructive) {
-                if let phoneURL = URL(string: "tel://\(selectedNumber)") {
+                let sanitized = selectedNumber
+                    .components(separatedBy: CharacterSet.decimalDigits.inverted)
+                    .joined()
+                if let phoneURL = URL(string: "tel://\(sanitized)"),
+                   UIApplication.shared.canOpenURL(phoneURL) {
                     UIApplication.shared.open(phoneURL)
                 }
             }
             Button("Cancel", role: .cancel) { }
         }
     }
-    
 }
 
 #Preview {
