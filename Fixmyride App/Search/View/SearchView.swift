@@ -1,27 +1,39 @@
 import MapKit
 import SwiftUI
 
+// Displays the map with user location, garage annotations, and interactive sheets.
 struct MapView: View {
     @EnvironmentObject var globalDto: GlobalDto
     @ObservedObject var viewModel = MapViewModel.shared
 
+    // Handles location permission
     let locationManager = CLLocationManager()
 
+    // State for Look Around feature
     @State private var lookAroundScene: MKLookAroundScene?
     @State private var isShowingLookAroundScene = false
+
+    // Currently selected garage
     @State private var selectedGarage: GarageModel?
+
+    // Sheet state controllers
     @State private var isShowingNavigationSheet = false
     @State private var isShowingHomeSheet = true
     @State private var isSearchBarFocused = false
+
+    // Search bar input
     @State private var searchTerm = ""
 
+    // Layout config for garage thumbnails
     let gridItems = [GridItem(.flexible()), GridItem(.flexible())]
 
+    // Route and directions info
     @State private var route: MKRoute?
     @State private var distance: Double?
     @State private var estimatedTime: Int?
     @State private var steps: [MKRoute.Step]?
 
+    // Filters garages based on search term
     private var filteredSearches: [GarageModel] {
         if searchTerm.isEmpty {
             return viewModel.garages
@@ -34,6 +46,7 @@ struct MapView: View {
 
     var body: some View {
         Map {
+            // Garage Annotations
             ForEach(viewModel.garages) { garage in
                 Annotation(
                     garage.name,
@@ -54,8 +67,10 @@ struct MapView: View {
                 }
             }
 
+            // User Location Annotation
             UserAnnotation()
 
+            // Route Polyline (if available)
             if let route {
                 MapPolyline(route).stroke(.red, lineWidth: 6)
             }
@@ -76,6 +91,7 @@ struct MapView: View {
             locationManager.requestWhenInUseAuthorization()
             viewModel.fetchGarages()
 
+            // Handles navigation flow reset
             if globalDto.comingFrom == Route.garage.rawValue {
                 isShowingHomeSheet = false
                 globalDto.comingFrom = ""
@@ -83,20 +99,25 @@ struct MapView: View {
                 isShowingHomeSheet = true
             }
         }
+        // Sheet: Home Search Sheet
         .sheet(isPresented: $isShowingHomeSheet) {
             searchSheetView
         }
+        // Sheet: Navigation directions
         .sheet(isPresented: $isShowingNavigationSheet) {
             directionsSheetView
         }
+        // Sheet: Garage Detail View
         .sheet(item: $selectedGarage) { garage in
             garageDetailSheet(garage: garage)
         }
     }
 
+    // View for search & garage grid/list
     private var searchSheetView: some View {
         Group {
             if isSearchBarFocused {
+                // List View while search bar is focused
                 VStack {
                     VStack(spacing: 16) {
                         CommonSearchBarView(
@@ -129,6 +150,7 @@ struct MapView: View {
                 .padding(.top, 16)
                 .background(.white)
             } else {
+                // Grid View when search is inactive
                 VStack {
                     VStack(spacing: 16) {
                         CommonSearchBarView(
@@ -149,7 +171,6 @@ struct MapView: View {
                             UIScreen.main.bounds.width * 0.05
                         )
                         Spacer()
-
                     }
 
                     ScrollView {
@@ -177,6 +198,7 @@ struct MapView: View {
         }
     }
 
+    // Returns a UI list tile for a garage based on its type
     private func garageListTile(_ garage: GarageModel) -> some View {
         let icon: String
         switch garage.type {
@@ -195,6 +217,7 @@ struct MapView: View {
         )
     }
 
+    // Directions view with route steps and estimated time
     private var directionsSheetView: some View {
         VStack {
             HStack {
@@ -208,6 +231,7 @@ struct MapView: View {
             }
             .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
+            // Distance & Time
             List {
                 CommonStaticListView(
                     icon: "app.connected.to.app.below.fill",
@@ -217,6 +241,7 @@ struct MapView: View {
             }
             .frame(maxHeight: 100)
 
+            // Route Step Instructions
             List {
                 if let steps {
                     ForEach(steps, id: \.self) { step in
@@ -237,6 +262,7 @@ struct MapView: View {
         .background(Color("commonBackground"))
     }
 
+    // Garage detail view with look around and direction buttons
     private func garageDetailSheet(garage: GarageModel) -> some View {
         VStack(spacing: 16) {
             HStack {
@@ -246,6 +272,7 @@ struct MapView: View {
                 )
                 Spacer()
 
+                // Look Around button
                 Button {
                     Task {
                         lookAroundScene = await getLookAroundScene(
@@ -255,12 +282,12 @@ struct MapView: View {
                             )
                         )
                         isShowingLookAroundScene = lookAroundScene != nil
-
                     }
                 } label: {
                     CommonIconButtonView(icon: "dot.viewfinder")
                 }
 
+                // Close button
                 Button {
                     selectedGarage = nil
                 } label: {
@@ -274,6 +301,7 @@ struct MapView: View {
                 multilineTextAlignment: .leading
             )
 
+            // Show directions button
             Button {
                 getDirection(
                     destination: CLLocationCoordinate2D(
@@ -289,24 +317,21 @@ struct MapView: View {
                     foregroundColor: Color("brandColor")
                 )
             }
-
             .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
 
+            // Garage images
             if let imageUrls = garage.imageUrls {
                 ScrollView {
                     LazyVGrid(columns: gridItems) {
                         ForEach(imageUrls, id: \.self) { url in
                             CommonSquareImageView(url: url)
-
                         }
-
-                    }.padding(.horizontal, UIScreen.main.bounds.width * 0.05)
+                    }
+                    .padding(.horizontal, UIScreen.main.bounds.width * 0.05)
                 }
-
             }
 
             Spacer()
-
         }
         .presentationDetents([.medium, .large])
         .ignoresSafeArea()
@@ -315,14 +340,17 @@ struct MapView: View {
         .background(Color("commonBackground"))
     }
 
+    // Calculates route from current location to garage
     func getDirection(destination: CLLocationCoordinate2D) {
         Task {
             guard var userLocation = await getUserLocation() else { return }
+
+            // Temporary fallback location
             userLocation = CLLocationCoordinate2D(
                 latitude: 37.3349,
                 longitude: -122.0090
             )
-            
+
             let request = MKDirections.Request()
             request.source = MKMapItem(
                 placemark: .init(coordinate: userLocation)
@@ -347,6 +375,7 @@ struct MapView: View {
         }
     }
 
+    // Gets user location asynchronously using live updates
     func getUserLocation() async -> CLLocationCoordinate2D? {
         let updates = CLLocationUpdate.liveUpdates()
         do {
@@ -360,6 +389,7 @@ struct MapView: View {
         }
     }
 
+    // Fetches Look Around scene based on garage coordinate
     func getLookAroundScene(coordinate: CLLocationCoordinate2D) async
         -> MKLookAroundScene?
     {
@@ -373,7 +403,9 @@ struct MapView: View {
     }
 }
 
+// SwiftUI Preview
 #Preview {
     MapView()
         .environmentObject(GlobalDto.shared)
 }
+
